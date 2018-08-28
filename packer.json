@@ -1,0 +1,61 @@
+{
+
+  "builders":[{
+    "type": "vmware-iso",
+    "guest_os_type": "centos-64",
+    "tools_upload_flavor": "linux",
+    "headless": true,
+    "http_directory": "http",
+    "vnc_disable_password": true,
+
+    "boot_command": "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>",
+    "boot_wait": "1m",
+
+    "disk_size" : 25000,
+    "disk_type_id": "thin",
+
+    "vmx_data": {
+      "ethernet0.networkName": "{{user `esxi_network_name`}}",
+      "config.version": 8,
+      "virtualHW.version": 8,
+      "ethernet0.present": "true",
+      "ethernet0.virtualDev": "vmxnet3",
+      "ethernet0.startConnected": "true",
+      "ethernet0.addressType": "generated",
+      "memsize": "4096",
+      "numvcpus": "2",
+      "cpuid.coresPerSocket": "1",
+      "RemoteDisplay.vnc.enabled": "TRUE",
+      "RemoteDisplay.vnc.port":  "5900"
+    },
+
+
+    "iso_url": "{{user `iso_url`}}",
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_password": "{{user `ssh_password`}}",
+    "ssh_timeout" : "1000s",
+    "shutdown_command": "shutdown -P now",
+
+    "remote_type": "esx5",
+    "remote_host": "{{user `esxi_host`}}",
+    "remote_datastore": "{{user `esxi_datastore`}}",
+    "remote_username": "{{user `esxi_username`}}",
+    "remote_password": "{{user `esxi_password`}}",
+    "keep_registered": true
+
+    }],
+
+    "provisioners": [
+      {
+        "type": "shell",
+        "scripts": [
+          "scripts/C7_build.sh",
+          "scripts/C7_sec.sh",
+          "scripts/C7_clean.sh"
+        ]
+   }
+  ]
+}
