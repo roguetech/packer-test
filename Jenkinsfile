@@ -1,9 +1,9 @@
+Workstation = "/var/lib/jenkins/workspace/packer-test"
 node {
   environment {
     tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     def Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/Packer'
     def ESXihost = '192.168.121.130'
-    Workstation = "/var/lib/jenkins/workspace/packer-test"
     def Date = new Date()
   }
     stage ('Checkout') {
