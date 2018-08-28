@@ -11,7 +11,7 @@ node {
     }
     stage('Build and Export') {
       echo 'Building and Exporting VMDK'
-     sh '$Packer/packer build -force -var-file=variables.json packer.json '
+     sh "'$Packer'/packer build -force -var-file=variables.json packer.json"
     }
 
     stage('Openstack Image') {
