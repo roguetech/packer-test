@@ -3,7 +3,7 @@ node {
     tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     def Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/Packer'
     def ESXihost = '192.168.121.130'
-    def Workstation = '/var/lib/jenkins_home/workspace/packer-test'
+    def Workstation = '/var/lib/jenkins/workspace/packer-test'
   }
     stage ('Checkout') {
       checkout scm
