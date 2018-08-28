@@ -1,6 +1,5 @@
 node {
   environment {
-    import groovy.transform.Field
     tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     def Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/Packer'
     def ESXihost = '192.168.121.130'
