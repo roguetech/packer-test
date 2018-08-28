@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/Packer'
+VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
 node {
   environment {
     tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
@@ -20,9 +21,9 @@ node {
       def date = new Date()
       newdate = (dateFormat.format(date))
       
-      sh "echo 'this is the date-$newdate'"
-      //sh 'openstack --insecure image set centos-latest --name centos-$Date'
-      //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
+      sh "echo 'this is the location: $VMDKLocation'"
+      //sh openstack --insecure image set centos-latest --name centos-$newdate'
+      //sh 'openstack --insecure image create --disk-format vmdk --file $VMDKLocation/packer-vmware-iso-disk1.vmdk centos-latest'
     }
     stage('Openstack Image Testing') {
       echo 'Testing Openstack Image'
