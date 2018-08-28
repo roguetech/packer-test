@@ -16,8 +16,8 @@ node {
 
     stage('Openstack Image') {
       echo 'Create Openstack Image'
-      echo ${date}
-      echo ${Workstation}
+      echo "${Date}"
+      echo "${Workstation}"
       //sh 'openstack --insecure image set centos-latest --name centos-${date}'
       //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
     }
