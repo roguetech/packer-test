@@ -18,7 +18,7 @@ node {
       sh "echo 'hello this is $Workstation'"
       def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
       def date = new Date()
-      newdate = println(dateFormat.format(date))
+      newdate = (dateFormat.format(date))
       
       sh "echo 'this is the date-$newdate'"
       //sh 'openstack --insecure image set centos-latest --name centos-$Date'
