@@ -19,7 +19,7 @@ node {
       def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
       def date = new Date()
       def newdate = println(dateFormat.format(date))
-      sh 'echo this is the date-${newdate}'
+      sh 'echo this is the date-$newdate'
       //sh 'openstack --insecure image set centos-latest --name centos-$Date'
       //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
     }
