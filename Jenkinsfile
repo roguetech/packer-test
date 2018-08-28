@@ -10,13 +10,15 @@ node {
     }
     stage('Build and Export') {
       echo 'Building and Exporting VMDK'
-      sh '${Packer}packer build -force -var-file=variables.json packer.json '
+     // sh '${Packer}packer build -force -var-file=variables.json packer.json '
     }
 
     stage('Openstack Image') {
       echo 'Create Openstack Image'
-    //  sh 'openstack --insecure image set centos-latest --name centos-old'
-      sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
+      echo '${date}'
+      echo '${Workstation}'
+      //sh 'openstack --insecure image set centos-latest --name centos-${date}'
+      //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
     }
     stage('Openstack Image Testing') {
       echo 'Testing Openstack Image'
