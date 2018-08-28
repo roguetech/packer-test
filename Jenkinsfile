@@ -16,7 +16,7 @@ node {
       echo 'Create Openstack Image'
       //echo "${Date}"
       echo Workstation
-      sh echo 'hello this is $Workstation'
+      sh "echo 'hello this is $Workstation'"
       //sh 'openstack --insecure image set centos-latest --name centos-${date}'
       //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
     }
