@@ -1,8 +1,6 @@
+import java.text.SimpleDateFormat
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/Packer'
-import java.time.*
-LocalDateTime t = LocalDateTime.now();
-return t as String
 node {
   environment {
     tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
@@ -18,7 +16,9 @@ node {
     stage('Openstack Image') {
       echo 'Create Openstack Image'
       sh "echo 'hello this is $Workstation'"
-      echo t
+      def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
+      def date = new Date()
+      println(dateFormat.format(date))
       //sh 'openstack --insecure image set centos-latest --name centos-$Date'
       //sh 'openstack --insecure image create --disk-format vmdk --file /var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso/packer-vmware-iso-disk1.vmdk centos-latest'
     }
