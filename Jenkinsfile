@@ -1,6 +1,6 @@
 import java.text.SimpleDateFormat
 Workstation = "/var/lib/jenkins/workspace/packer-test"
-Packer = '/var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
+Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
 node {
   environment {
