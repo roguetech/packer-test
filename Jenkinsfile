@@ -31,6 +31,7 @@ pipeline {
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
+        echo '$tag'
        // sh "openstack --insecure image set centos-latest --name centos-'$tag'"
        // sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
       }
