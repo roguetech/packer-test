@@ -2,6 +2,10 @@ import java.text.SimpleDateFormat
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
+dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
+date = new Date()
+newdate = (dateFormat.format(date))
+
 pipeline {
   agent any
   environment {
@@ -21,11 +25,6 @@ pipeline {
     }
 
     stage('Openstack Image') {
-      steps {
-        def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
-        def date = new Date()
-        newdate = (dateFormat.format(date))
-      }
       steps {
         echo 'Create Openstack Image'
         sh "openstack --insecure image set centos-latest --name centos-'$newdate'"
