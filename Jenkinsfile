@@ -4,8 +4,9 @@ Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstal
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
 pipeline {
   environment {
-    tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
+    Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
   }
+  stages{
     stage ('Checkout') {
       checkout scm
     }
@@ -29,4 +30,5 @@ pipeline {
     stage('Cleanup') {
       echo 'Cleaning up'
     }
+}
 }
