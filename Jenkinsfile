@@ -7,28 +7,38 @@ pipeline {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
   }
   stages{
-    stage ('Checkout') {
-      checkout scm
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
     stage('Build and Export') {
-      echo 'Building and Exporting VMDK'
-      sh "'$Packer'/packer build -force -var-file=variables.json packer.json"
+      steps {
+        echo 'Building and Exporting VMDK'
+        sh "'$Packer'/packer build -force -var-file=variables.json packer.json"
+      }
     }
 
     stage('Openstack Image') {
-      echo 'Create Openstack Image'
-      def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
-      def date = new Date()
-      newdate = (dateFormat.format(date))
+      steps {
+        echo 'Create Openstack Image'
+        def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
+        def date = new Date()
+        newdate = (dateFormat.format(date))
     
-      sh "openstack --insecure image set centos-latest --name centos-'$newdate'"
-      sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
+        sh "openstack --insecure image set centos-latest --name centos-'$newdate'"
+        sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
+      }
     }
     stage('Openstack Image Testing') {
-      echo 'Testing Openstack Image'
+      steps {
+        echo 'Testing Openstack Image'
+      }
     }
     stage('Cleanup') {
-      echo 'Cleaning up'
+      steps {
+        echo 'Cleaning up'
+      }
     }
-}
+  }
 }
