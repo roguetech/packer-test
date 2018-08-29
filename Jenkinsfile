@@ -49,10 +49,10 @@ pipeline {
         echo 'Pushing to Artifactory'
       }
     }
-    post {
-      cleanup {
-        echo 'Cleaning Up'
-      }
+  }
+  post {
+    cleanup {
+      echo 'Cleaning Up'
     }
   }
 }
