@@ -53,7 +53,6 @@ pipeline {
       cleanup {
         echo 'Cleaning Up'
       }
-      }
     }
   }
 }
