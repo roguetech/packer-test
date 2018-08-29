@@ -31,7 +31,6 @@ pipeline {
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
-        echo "'$tag'"
        // sh "openstack --insecure image set centos-latest --name centos-'$tag'"
        // sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
       }
@@ -45,7 +44,9 @@ pipeline {
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
-        //sh "openstack --insecure server list --name packer-test -c Networks"
+        //sh "openstack --insecure server list --name packer-test -c Networks > packer.json"
+        //sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
+        ssh root@openstack-ip -y -p 
       }
     }
     stage('Deploy to Artifactory'){
