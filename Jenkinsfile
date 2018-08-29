@@ -3,6 +3,7 @@ Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
 pipeline {
+  agent any
   environment {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
   }
