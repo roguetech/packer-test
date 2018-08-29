@@ -22,11 +22,12 @@ pipeline {
 
     stage('Openstack Image') {
       steps {
-        echo 'Create Openstack Image'
         def dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
         def date = new Date()
         newdate = (dateFormat.format(date))
-    
+      }
+      steps {
+        echo 'Create Openstack Image'
         sh "openstack --insecure image set centos-latest --name centos-'$newdate'"
         sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
       }
