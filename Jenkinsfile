@@ -1,7 +1,7 @@
-import java.text.SimpleDateFormat
-dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
-date = new Date()
-newdate = (dateFormat.format(date))
+//import java.text.SimpleDateFormat
+//dateFormat = new SimpleDateFormat("yyyyMMddHHmm")
+//date = new Date()
+//newdate = (dateFormat.format(date))
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
@@ -13,6 +13,7 @@ pipeline {
   }
   environment {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
+    tag = VersionNumber (versionNumberString: 'CentOS7.5-${BUILDS_TODAY}-${BUILD_DATE_FORMATTED, "ddMMyyyy"}')
   }
   stages{
     stage('Checkout') {
@@ -30,18 +31,20 @@ pipeline {
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
-       // sh "openstack --insecure image set centos-latest --name centos-'$newdate'"
+       // sh "openstack --insecure image set centos-latest --name centos-'$tag'"
        // sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
       }
     }
     stage('Build Openstack Test Image') {
       steps {
         echo 'Testing Openstack Image'
+      //  sh "openstack --insecure server create --flavor rxp.pl.standard --image centos-latest --network rxpdev packer-test"
       }
     }
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
+        //sh "openstack --insecure server list --name packer-test -c Networks"
       }
     }
     stage('Deploy to Artifactory'){
