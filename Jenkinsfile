@@ -42,7 +42,7 @@ pipeline {
         echo 'Testing Image'
         //sh "openstack --insecure server list --name packer-test -c Networks > packer.json"
         //sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
-        def remote = [:]
+        remote = [:]
         remote.name = 'test'
         remote.host = '10.70.2.26'
         remote.user = 'root'
