@@ -1,6 +1,12 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
+remote = [:]
+remote.name = 'test'
+remote.host = '10.70.2.26'
+remote.user = 'root'
+remote.password = 'password'
+remote.allowAnyHosts = true
 
 pipeline {
   agent any
@@ -42,12 +48,6 @@ pipeline {
         echo 'Testing Image'
         //sh "openstack --insecure server list --name packer-test -c Networks > packer.json"
         //sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
-        remote = [:]
-        remote.name = 'test'
-        remote.host = '10.70.2.26'
-        remote.user = 'root'
-        remote.password = 'password'
-        remote.allowAnyHosts = true
         sshCommand remote: remote, command: "ls -lrt"
       }
     }
