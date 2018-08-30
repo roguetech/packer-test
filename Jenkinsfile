@@ -48,8 +48,7 @@ pipeline {
         remote.user = 'root'
         remote.password = 'password'
         remote.allowAnyHosts = true
-  stage('Remote SSH') {
-    sshCommand remote: remote, command: "ls -lrt"
+        sshCommand remote: remote, command: "ls -lrt"
       }
     }
     stage('Deploy to Artifactory'){
