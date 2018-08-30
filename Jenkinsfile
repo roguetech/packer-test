@@ -42,7 +42,14 @@ pipeline {
         echo 'Testing Image'
         //sh "openstack --insecure server list --name packer-test -c Networks > packer.json"
         //sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
-        ssh root@openstack-ip -y -p 
+        def remote = [:]
+        remote.name = 'test'
+        remote.host = '10.70.2.26'
+        remote.user = 'root'
+        remote.password = 'password'
+        remote.allowAnyHosts = true
+  stage('Remote SSH') {
+    sshCommand remote: remote, command: "ls -lrt"
       }
     }
     stage('Deploy to Artifactory'){
