@@ -8,8 +8,8 @@ remote.user = 'root'
 remote.password = 
 remote.allowAnyHosts = true
 withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
-  remote.user = ${password}
-  remote.password = ${username}
+  remote.user = '${password}'
+  remote.password = '${username}'
 }
 
 pipeline {
