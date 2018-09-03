@@ -55,9 +55,11 @@ pipeline {
         script {
           sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
           remote.host = readFile('test.txt').trim()
+          echo "${remote.host}"
           echo "${remote.user}"
           echo "${remote.password}"
         }
+        sleep 600
         sshCommand remote: remote, command: "ls -lrt"
       }
     }
