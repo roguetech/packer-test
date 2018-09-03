@@ -47,10 +47,8 @@ pipeline {
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
-        sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks > packer.json"
         script {
-          sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/|//g' > packer1.txt"
-          packer1 = "cat packer1.txt"
+          def packer1 = openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print $2'}
           echo packer1
         }
         sshCommand remote: remote, command: "ls -lrt"
