@@ -53,7 +53,7 @@ pipeline {
       steps {
         echo 'Testing Image'
         script {
-          sleep 300
+          sleep 180
           sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
           remote.host = readFile('test.txt').trim()
           echo "${remote.host}"
@@ -61,6 +61,7 @@ pipeline {
           echo "${remote.password}"
         }
         sshCommand remote: remote, command: "ls -lrt"
+        sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
       }
     }
     stage('Deploy to Artifactory'){
