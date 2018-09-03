@@ -34,20 +34,21 @@ pipeline {
       steps {
         echo 'Create Openstack Image'
         //sh "openstack --insecure image set centos-latest --name centos-'$tag'"
-        sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
+        //sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
       }
     }
     stage('Build Openstack Test Image') {
       steps {
         echo 'Testing Openstack Image'
-        sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
+        //sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
       }
     }
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
         sh "openstack --insecure server list --name Packer-'$tag' -c Networks > packer.json"
-        sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
+        def whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
+        echo whatismyip
         sshCommand remote: remote, command: "ls -lrt"
       }
     }
