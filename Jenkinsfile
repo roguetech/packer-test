@@ -1,12 +1,14 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
+withCredentials([string(credentialsId: 'my-pass', variable: 'PW1')]) {
+  echo '${PW1}'
+}
 remote = [:]
 remote.name = 'test'
 remote.host = ''
 remote.user = 'root'
-remote.password = 'withCredentials([string(credentialsId: 'my-pass', variable: 'PW1')]) {
-}'
+remote.password = 
 remote.allowAnyHosts = true
 
 pipeline {
