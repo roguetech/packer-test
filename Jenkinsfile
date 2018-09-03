@@ -23,6 +23,21 @@ pipeline {
         checkout scm
       }
     }
+    stage('one') {
+      steps {
+        sh 'echo hotness > myfile.txt'
+        script {
+          // trim removes leading and trailing whitespace from the string
+          myVar = readFile('myfile.txt').trim()
+        }
+        echo "${myVar}" // prints 'hotness'
+      }
+    }
+    stage('two') {
+      steps {
+        echo "${myVar}" // prints 'hotness'
+      }
+    }
     stage('Build and Export') {
       steps {
         echo 'Building and Exporting VMDK'
