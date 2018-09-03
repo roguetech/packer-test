@@ -1,13 +1,10 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
-withCredentials([$class: 'UsernamePasswordMultiBinding',(credentialsId: 'my-pass', 
-                    usernameVariable: 'USERNAME',
-                    passwordVariable: 'PASSWORD')]) 
-                {
-                    echo 'username='+USERNAME
-                    echo 'password='+PASSWORD
-                }
+withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
+  remote.user = ${password}
+  remote.password = ${username}
+}
 remote = [:]
 remote.name = 'test'
 remote.host = ''
