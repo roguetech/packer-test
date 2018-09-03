@@ -8,8 +8,8 @@ remote.user = 'root'
 remote.password = 
 remote.allowAnyHosts = true
 withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
-  remote.user = '${username}'
-  remote.password = '${password}'
+  remote.user = username
+  remote.password = password
   echo "${remote.host}"
   echo "${remote.password}"
 }
