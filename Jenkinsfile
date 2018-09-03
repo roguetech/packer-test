@@ -49,7 +49,7 @@ pipeline {
         echo 'Testing Image'
         script {
           packer1 = sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print \$2'}"
-          echo packer1
+          sh "echo '$packer1'"
         }
         sshCommand remote: remote, command: "ls -lrt"
       }
