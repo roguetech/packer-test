@@ -44,11 +44,12 @@ pipeline {
       }
     }
     stage('Testing Image'){
-      def whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
       steps {
         echo 'Testing Image'
         sh "openstack --insecure server list --name Packer-'$tag' -c Networks > packer.json"
-        //def whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
+        script {
+          def whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
+        }
         sh "echo '$whatismyip'"
         sshCommand remote: remote, command: "ls -lrt"
       }
