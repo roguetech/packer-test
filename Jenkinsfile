@@ -46,9 +46,9 @@ pipeline {
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
-        sh "openstack --insecure server list --name Packer-'$tag' -c Networks > packer.json"
+        sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks > packer.json"
         script {
-          sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g' > packerupdate.txt"
+          sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\|//g' > packerupdate.txt"
           whatismyip = sh "cat packerupdate.txt"
           sh "echo '$packerupdate.txt'"
         }
