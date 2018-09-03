@@ -8,8 +8,10 @@ remote.user = 'root'
 remote.password = 
 remote.allowAnyHosts = true
 withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
-  remote.user = '${password}'
-  remote.password = '${username}'
+  remote.user = '${username}'
+  remote.password = '${password}'
+  echo "${remote.host}"
+  echo "${remote.password}"
 }
 
 pipeline {
@@ -53,8 +55,8 @@ pipeline {
         script {
          // sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
          // remote.host = readFile('test.txt').trim()
-          echo "remote.host"
-          echo "remote.password"
+          echo "${remote.host}"
+          echo "${remote.password}"
         }
        // sshCommand remote: remote, command: "ls -lrt"
       }
