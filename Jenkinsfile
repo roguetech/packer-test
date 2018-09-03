@@ -33,21 +33,21 @@ pipeline {
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
-       // sh "openstack --insecure image set centos-latest --name centos-'$tag'"
-       // sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-latest"
+        //sh "openstack --insecure image set centos-latest --name centos-'$tag'"
+        sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk centos-'$tag'"
       }
     }
     stage('Build Openstack Test Image') {
       steps {
         echo 'Testing Openstack Image'
-      //  sh "openstack --insecure server create --flavor rxp.pl.standard --image centos-latest --network rxpdev packer-test"
+        sh "openstack --insecure server create --flavor rxp.pl.standard --image centos-'$tag' --network rxpdev packer-'$tag'"
       }
     }
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
-        //sh "openstack --insecure server list --name packer-test -c Networks > packer.json"
-        //sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
+        sh "openstack --insecure server list --name packer-'$tag' -c Networks > packer.json"
+        sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
         sshCommand remote: remote, command: "ls -lrt"
       }
     }
