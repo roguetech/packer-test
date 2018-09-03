@@ -63,7 +63,8 @@ pipeline {
         echo 'Testing Image'
         script {
           sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
-          echo 'test.txt'
+          myVar1 = readFile('test.txt').trim()
+          echo "${myVar1}"
         }
         sshCommand remote: remote, command: "ls -lrt"
       }
