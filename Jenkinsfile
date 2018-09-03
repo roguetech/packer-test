@@ -47,7 +47,7 @@ pipeline {
       steps {
         echo 'Testing Image'
         sh "openstack --insecure server list --name packer-'$tag' -c Networks > packer.json"
-        sh "cat ./packer-test.json | awk -F'[/=]' {'print $2'} | sed 's/\"//g'"
+        sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
         sshCommand remote: remote, command: "ls -lrt"
       }
     }
