@@ -7,6 +7,7 @@ remote.host = '10.70.2.26'
 remote.user = 'root'
 remote.password = 'password'
 remote.allowAnyHosts = true
+def packer1 
 
 pipeline {
   agent any
@@ -44,9 +45,6 @@ pipeline {
       }
     }
     stage('Testing Image'){
-      define {
-       def packer1 
-      }
       steps {
         echo 'Testing Image'
         sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks > packer.json"
