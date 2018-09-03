@@ -33,23 +33,22 @@ pipeline {
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
-        //sh "openstack --insecure image set centos-latest --name centos-'$tag'"
-        //sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
+        sh "openstack --insecure image set centos-latest --name centos-'$tag'"
+        sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
       }
     }
     stage('Build Openstack Test Image') {
       steps {
         echo 'Testing Openstack Image'
-        //sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
+        sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
       }
     }
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
         script {
-          sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
+          sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
           remote.host = readFile('test.txt').trim()
-          echo "${remote.host}"
         }
         sshCommand remote: remote, command: "ls -lrt"
       }
