@@ -1,7 +1,6 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
-Packer1 = 'test'
 remote = [:]
 remote.name = 'test'
 remote.host = '10.70.2.26'
@@ -49,7 +48,7 @@ pipeline {
         echo 'Testing Image'
         script {
           packer1 = sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print \$2'}"
-          sh "echo '$packer1'"
+          echo "${packer1}"
         }
         sshCommand remote: remote, command: "ls -lrt"
       }
