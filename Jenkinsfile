@@ -1,9 +1,13 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
-withCredentials([string(credentialsId: 'my-pass', variable: 'PW1')]) {
-  echo '${PW1}'
-}
+withCredentials([string(credentialsId: 'my-pass', 
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD')]) 
+                {
+                    echo 'username='+USERNAME
+                    echo 'password='+PASSWORD
+                }
 remote = [:]
 remote.name = 'test'
 remote.host = ''
@@ -37,25 +41,25 @@ pipeline {
       steps {
         echo 'Create Openstack Image'
         //sh "openstack --insecure image set centos-latest --name centos-'$tag'"
-        sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
+        //sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
       }
     }
     stage('Build Openstack Test Image') {
       steps {
         echo 'Testing Openstack Image'
-        sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
+        //sh "openstack --insecure server create --flavor rxp.pl.standard --image '$tag' --network rxpdev Packer-'$tag'"
       }
     }
     stage('Testing Image'){
       steps {
         echo 'Testing Image'
         script {
-          sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
-          remote.host = readFile('test.txt').trim()
+         // sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
+         // remote.host = readFile('test.txt').trim()
           echo "remote.host"
           echo "remote.password"
         }
-        sshCommand remote: remote, command: "ls -lrt"
+       // sshCommand remote: remote, command: "ls -lrt"
       }
     }
     stage('Deploy to Artifactory'){
