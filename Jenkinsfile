@@ -3,7 +3,7 @@ Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstal
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
 remote = [:]
 remote.name = 'test'
-remote.host = '10.70.2.26'
+remote.host = ''
 remote.user = 'root'
 remote.password = 'password'
 remote.allowAnyHosts = true
@@ -48,10 +48,10 @@ pipeline {
         echo 'Testing Image'
         script {
           sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
-          myVar1 = readFile('test.txt').trim()
-          echo "${myVar1}"
+          remote.host = readFile('test.txt').trim()
+          echo "${remote.host}"
         }
-        sshCommand remote: "${myVar1}", command: "ls -lrt"
+        sshCommand remote: remote, command: "ls -lrt"
       }
     }
     stage('Deploy to Artifactory'){
