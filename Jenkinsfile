@@ -7,7 +7,7 @@ remote.host = '10.70.2.26'
 remote.user = 'root'
 remote.password = 'password'
 remote.allowAnyHosts = true
-def packer1 
+packer1 = 'test'
 
 pipeline {
   agent any
