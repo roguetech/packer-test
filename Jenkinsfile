@@ -48,7 +48,7 @@ pipeline {
         echo 'Testing Image'
         sh "openstack --insecure server list --name Packer-'$tag' -c Networks > packer.json"
         script {
-          def whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
+          whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/\"//g'"
           echo whatismyip
         }
         sshCommand remote: remote, command: "ls -lrt"
