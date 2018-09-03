@@ -49,7 +49,7 @@ pipeline {
         sh "openstack --insecure server list --name Packer-CentOS7.5-2-03092018 -c Networks > packer.json"
         script {
           whatismyip = sh "cat ./packer.json | awk -F'[/=]' {'print \$2'} | sed 's/|//g'"
-          echo whatismyip
+          echo $whatismyip
         }
         sshCommand remote: remote, command: "ls -lrt"
       }
