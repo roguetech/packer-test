@@ -1,7 +1,7 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
-packer1 = 'test'
+Packer1 = 'test'
 remote = [:]
 remote.name = 'test'
 remote.host = '10.70.2.26'
