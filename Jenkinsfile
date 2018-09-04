@@ -1,17 +1,7 @@
 Workstation = "/var/lib/jenkins/workspace/packer-test"
 Packer = '/var/lib/jenkins/tools/biz.neustar.jenkins.plugins.packer.PackerInstallation/packer'
 VMDKLocation = '/var/lib/jenkins/workspace/packer-test/output-vmware-iso/packer-vmware-iso'
-remote = [:]
-remote.name = 'test'
-remote.host = ''
-remote.user = 'root'
-remote.password = 
-remote.allowAnyHosts = true
-withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
-  remote.user = username
-  remote.password = password
-  echo "${remote.user}"
-  echo "${remote.password}"
+
 }
 
 pipeline {
@@ -22,6 +12,19 @@ pipeline {
   environment {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     tag = VersionNumber (versionNumberString: 'CentOS7.5-${BUILDS_TODAY}-${BUILD_DATE_FORMATTED, "ddMMyyyy"}')
+  }
+  parameters {
+    remote = [:]
+    remote.name = 'test'
+    remote.host = ''
+    remote.user = 'root'
+    remote.password = 
+    remote.allowAnyHosts = true
+    withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
+      remote.user = username
+       remote.password = password
+    echo "${remote.user}"
+    echo "${remote.password}"
   }
   stages{
     stage('Checkout') {
@@ -55,13 +58,13 @@ pipeline {
         script {
           sleep 180
           sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
-          remote.host = readFile('test.txt').trim()
-          echo "${remote.host}"
-          echo "${remote.user}"
-          echo "${remote.password}"
+          parmas.remote.host = readFile('test.txt').trim()
+          echo "${params.remote.host}"
+          echo "${params.remote.user}"
+          echo "${params.remote.password}"
         }
-        sshCommand remote: remote, command: "ls -lrt"
-        sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+        sshCommand remote: parmas.remote, command: "ls -lrt"
+        sshCommand remote: parmas.remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
       }
     }
     stage('Deploy to Artifactory'){
