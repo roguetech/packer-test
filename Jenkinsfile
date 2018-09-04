@@ -54,7 +54,7 @@ pipeline {
         script {
           sleep 180
           sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
-          parmas.remote.host = readFile('test.txt').trim()
+          remote.host = readFile('test.txt').trim()
           echo "${remote.host}"
           echo "${remote.user}"
           echo "${remote.password}"
