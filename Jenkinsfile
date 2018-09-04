@@ -23,6 +23,7 @@ pipeline {
        remote.password = password
     echo "${remote.user}"
     echo "${remote.password}"
+    }
   }
   stages{
     stage('Checkout') {
