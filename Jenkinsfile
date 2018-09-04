@@ -10,15 +10,15 @@ pipeline {
   environment {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     tag = VersionNumber (versionNumberString: 'CentOS7.5-${BUILDS_TODAY}-${BUILD_DATE_FORMATTED, "ddMMyyyy"}')
-     remote = [:]
-    remote.name = 'test'
-    remote.host = ''
-    remote.user = 'root'
-    remote.password = 
+    remote = [:]
+    remote.name = "test"
+    remote.host = ""
+    remote.user = "root"
+    remote.password = ""
     remote.allowAnyHosts = true
     withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
       remote.user = username
-       remote.password = password
+      remote.password = password
     }
   }
   stages{
