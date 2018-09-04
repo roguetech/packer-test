@@ -10,9 +10,7 @@ pipeline {
   environment {
     Packer = tool name: 'Packer', type: 'biz.neustar.jenkins.plugins.packer.PackerInstallation'
     tag = VersionNumber (versionNumberString: 'CentOS7.5-${BUILDS_TODAY}-${BUILD_DATE_FORMATTED, "ddMMyyyy"}')
-  }
-  parameters {
-    remote = [:]
+     remote = [:]
     remote.name = 'test'
     remote.host = ''
     remote.user = 'root'
@@ -21,8 +19,6 @@ pipeline {
     withCredentials([usernamePassword(credentialsId: 'my-pass', passwordVariable: 'password', usernameVariable: 'username')]) {
       remote.user = username
        remote.password = password
-    echo "${remote.user}"
-    echo "${remote.password}"
     }
   }
   stages{
@@ -58,12 +54,12 @@ pipeline {
           sleep 180
           sh "openstack --insecure server list --name Packer-'$tag' -c Networks -f value | awk -F'[/=]' {'print \$2'} > test.txt"
           parmas.remote.host = readFile('test.txt').trim()
-          echo "${params.remote.host}"
-          echo "${params.remote.user}"
-          echo "${params.remote.password}"
+          echo "${remote.host}"
+          echo "${remote.user}"
+          echo "${remote.password}"
         }
-        sshCommand remote: parmas.remote, command: "ls -lrt"
-        sshCommand remote: parmas.remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+        sshCommand remote: remote, command: "ls -lrt"
+        sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
       }
     }
     stage('Deploy to Artifactory'){
