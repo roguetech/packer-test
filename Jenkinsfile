@@ -31,14 +31,14 @@ pipeline {
     stage('Build and Export') {
       steps {
         echo 'Building and Exporting VMDK'
-      //  sh "'$Packer'/packer build -force -var-file=variables.json packer.json"
+        sh "'$Packer'/packer build -force -var-file=variables.json packer.json"
       }
     }
 
     stage('Openstack Image') {
       steps {
         echo 'Create Openstack Image'
-        //sh "openstack --insecure image set centos-latest --name centos-'$tag'"
+        sh "openstack --insecure image set centos-latest --name centos-'$tag'"
         sh "openstack --insecure image create --disk-format vmdk --file '$VMDKLocation'/packer-vmware-iso-disk1.vmdk '$tag'"
       }
     }
